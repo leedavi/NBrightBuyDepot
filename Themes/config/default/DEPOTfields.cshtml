@@ -1,0 +1,53 @@
+﻿@inherits NBrightBuy.render.NBrightBuyRazorTokens<NBrightDNN.NBrightRazor>
+@using System.Globalization
+@using System.Linq
+@using System.Web.UI.WebControls
+@using NBrightDNN
+@using Nevoweb.DNN.NBrightBuy.Components
+
+@AddMetaData("resourcepath", "/DesktopModules/NBright/NBrightBuy/App_LocalResources/")
+@AddMetaData("resourcepath", "/DesktopModules/NBright/NBrightBuyDepot/App_LocalResources/")
+
+
+@{
+    // assign Model, so we can resolve var in VS
+    var info = (NBrightInfo)Model.List.First();
+}
+
+
+<input id="itemid" type="hidden" value="@info.ItemID"/>
+<input id="editlang" type="hidden" value="@info.Lang"/>
+<input id="lang" type="hidden" value="@CultureInfo.CurrentCulture"/> <!-- get the current culture and pass to the ajax server side, so it knows what language is -->
+
+<div class="col-xs-12 col-sm-12">
+    <div class="form-group depotdetail">
+        <div class="col-sm-12">
+            <div class="col-sm-2">
+                <label>@ResourceKey("Admin.ref")</label>
+                @TextBox(info, "genxml/textbox/ref", "class='form-control'")
+            </div>
+            <div class="col-sm-4">
+                <label>@ResourceKey("Admin.name")</label>
+                @TextBox(info, "genxml/textbox/name", "class='form-control'")
+            </div>
+            <div class="col-sm-6">
+                <label>@ResourceKey("Admin.email")</label>
+                @TextBox(info, "genxml/textbox/email", "class='form-control'")
+            </div>
+        </div>
+
+        <div id="depotclientlist"></div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="col-sm-5">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <hr />
+                <div>Id: @info.ItemID  Guid: @info.GUIDKey</div>
+            </div>
+        </div>
+    </div>
+
+</div>

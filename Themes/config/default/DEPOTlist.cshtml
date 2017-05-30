@@ -1,0 +1,41 @@
+﻿@inherits NBrightBuy.render.NBrightBuyRazorTokens<NBrightDNN.NBrightRazor>
+@using NBrightDNN
+
+@AddMetaData("resourcepath", "/DesktopModules/NBright/NBrightBuy/App_LocalResources/")
+@AddMetaData("resourcepath", "/DesktopModules/NBright/NBrightBuyDepot/App_LocalResources/")
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-content">
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr style="width: 100%">
+                        <th>@ResourceKey("Admin.ref")</th>
+                        <th>@ResourceKey("Admin.name")</th>
+                        <th>@ResourceKey("Admin.email")</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach (NBrightInfo x in Model.List)
+                    {
+                        // dummy record inject for empty list
+                        if (x.ItemID > 0)
+                        {
+                            <tr>
+                                <td>@x.GetXmlProperty("genxml/textbox/ref")</td>
+                                <td>@x.GetXmlProperty("genxml/textbox/name")</td>
+                                <td>@x.GetXmlProperty("genxml/textbox/email")</td>
+                                <td><span class="edititem" itemid="@x.ItemID">@ResourceKey("General.cmdEditIcon")</span></td>
+                            </tr>
+                        }
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

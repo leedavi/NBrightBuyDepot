@@ -1,0 +1,17 @@
+@using System.Linq
+@using NBrightDNN
+@using Nevoweb.DNN.NBrightBuy.Components
+@inherits NBrightBuy.NBrightBuyDepot.render.RazorTokens<NBrightDNN.NBrightRazor>
+
+@AddMetaData("resourcepath", "/DesktopModules/NBright/NBrightBuyDepot/App_LocalResources/")
+
+
+@{
+    var info = (NBrightInfo)Model.List.First();
+}
+
+
+<label class="col-sm-3 control-label">@ResourceKey("Admin.depot")</label>
+<div class="col-sm-5">
+    @DropDownListDepot(info, "genxml/dropdownlist/depot", "")
+</div>
