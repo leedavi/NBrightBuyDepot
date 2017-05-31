@@ -94,6 +94,7 @@
     <EmbeddedResource Include="App_LocalResources\Admin.ascx.resx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Installation\NBrightBuyDepot.dnn" />
     <None Include="Themes\config\default\clientfields.cshtml" />
     <None Include="Themes\config\default\display.cshtml" />
     <None Include="Themes\config\default\Admin.cshtml" />
