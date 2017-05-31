@@ -65,7 +65,31 @@ namespace Nevoweb.DNN.NBrightBuy.Providers.NBrightBuyDepot
 
         public override NBrightInfo BeforePaymentOK(NBrightInfo nbrightInfo)
         {
-            return nbrightInfo;
+            //see if we have an imported client
+            var userid = nbrightInfo.UserId;
+            var uInfo = UserController.Instance.GetUser(PortalSettings.Current.PortalId, userid);
+            if (uInfo != null)
+            {
+                var c = new ClientData(nbrightInfo.PortalId, nbrightInfo.UserId);
+                if (c.Exists)
+                {
+                    var depotnum = c.DataRecord.GetXmlProperty("genxml/dropdownlist/depot");
+                    var objCtrl = new NBrightBuyController();
+                    var nbi = objCtrl.GetByGuidKey(PortalSettings.Current.PortalId, -1, "DEPOTUSER", uInfo.Email);
+                    if (depotnum == "" && nbi != null)
+                    {
+                        depotnum = nbi.GetXmlProperty("genxml/dropdownlist/depot");
+                        var depot = objCtrl.GetByGuidKey(nbrightInfo.PortalId, -1, "DEPOT", depotnum);
+                        if (depot != null)
+                        {
+                            c.DataRecord.SetXmlProperty("genxml/dropdownlist/depot", depotnum);
+                            c.Save();
+                        }
+                        objCtrl.Delete(nbi.ItemID);
+                    }
+                }
+            }
+                return nbrightInfo;
         }
 
         public override NBrightInfo AfterPaymentOK(NBrightInfo nbrightInfo)

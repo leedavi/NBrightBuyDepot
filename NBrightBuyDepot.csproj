@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Installation\NBrightBuyDepot.dnn" />
+    <None Include="README.md" />
     <None Include="Themes\config\default\clientfields.cshtml" />
     <None Include="Themes\config\default\display.cshtml" />
     <None Include="Themes\config\default\Admin.cshtml" />

@@ -92,21 +92,36 @@ namespace Nevoweb.DNN.NBrightBuy.Providers.NBrightBuyDepot
                             var nbi = new NBrightInfo();
                             nbi.GUIDKey = userInfo.Email;
                             nbi.UserId = userInfo.UserID;
-                            nbi.SetXmlProperty("genxml/depot",s[1]);
+                            nbi.SetXmlProperty("genxml/depot", s[1]);
                             objCtrl.Update(nbi);
 
                             var nbi2 = objCtrl.GetByType(PortalId, -1, "CLIENT", userInfo.UserID.ToString());
                             if (nbi2 != null)
                             {
-                                nbi2.SetXmlProperty("genxml/dropdownlist/depot",s[1]);
+                                nbi2.SetXmlProperty("genxml/dropdownlist/depot", s[1]);
                                 objCtrl.Update(nbi2);
                             }
                             else
                             {
-                                var c = new ClientData(PortalId,userInfo.UserID);
+                                var c = new ClientData(PortalId, userInfo.UserID);
                                 c.DataRecord.SetXmlProperty("genxml/dropdownlist/depot", s[1]);
                                 c.Save();
                             }
+                        }
+                        else
+                        {
+                            var nbi = new NBrightInfo(true);
+                            nbi.PortalId = PortalId;
+                            nbi.ModuleId = -1;
+                            nbi.TypeCode = "DEPOTUSER";
+                            nbi.GUIDKey = s[0];
+                            nbi.SetXmlProperty("genxml/dropdownlist/depot", s[1]);
+                            var depotusertest = objCtrl.GetByGuidKey(PortalSettings.Current.PortalId, -1, "DEPOTUSER", s[0]);
+                            if (depotusertest != null)
+                            {
+                                nbi.ItemID = depotusertest.ItemID;
+                            }
+                            objCtrl.Update(nbi);
                         }
                     }
                 }
