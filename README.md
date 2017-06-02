@@ -48,3 +48,14 @@ The template required is included in the NBrightBuyDepot modules and can be foun
 It is called "clientfields.cshtml".
 
 This file should be placed in the "<Portal Root>\Themes\config\Default" folder.
+
+
+Security Roles
+--------------
+
+A security role called "hasaccount" will be assign to all imported clients, when they make there first purchase.
+It will also, be assigned to the clients who has had the "Has Account" checkbox set to True in the Client detail page.
+
+This roles is attached using the "ValidateCartAfter" event.
+
+If the roles "" is not existing in the Portal, then the rolle will NOT be create or assigned.

@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="assignedemail.Text" xml:space="preserve">
+    <value>Client Needs to be assigned a Depot:</value>
+  </data>
   <data name="clients.Text" xml:space="preserve">
     <value>Clients</value>
   </data>
   <data name="code.Text" xml:space="preserve">
     <value>Code</value>
+  </data>
+  <data name="default.Text" xml:space="preserve">
+    <value>Default</value>
   </data>
   <data name="deletemsg.Text" xml:space="preserve">
     <value>Delete Record?</value>
@@ -137,6 +143,9 @@
   </data>
   <data name="email.Text" xml:space="preserve">
     <value>Depot Email</value>
+  </data>
+  <data name="hasaccount.Text" xml:space="preserve">
+    <value>Has Account</value>
   </data>
   <data name="helpmsg.Text" xml:space="preserve">
     <value>Help Text</value>
