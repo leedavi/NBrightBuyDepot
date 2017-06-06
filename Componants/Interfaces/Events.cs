@@ -28,11 +28,13 @@ namespace Nevoweb.DNN.NBrightBuy.Providers.NBrightBuyDepot
                 var c = new ClientData(cartInfo.PortalId, cartInfo.UserId);
                 if (c.Exists)
                 {
-                    if (c.DataRecord.GetXmlPropertyBool("genxml/checkbox/hasaccount") && !UserController.Instance.GetCurrentUserInfo().IsInRole("hasaccount"))
+                    if ((!c.DataRecord.GetXmlPropertyBool("genxml/checkbox/hasaccount") || c.DataRecord.GetXmlPropertyRaw("genxml/checkbox/hasaccount") == "") && !UserController.Instance.GetCurrentUserInfo().IsInRole("hasaccount"))
                     {
                         //Assign to user
                         var oDnnRoleController = new RoleController();
                         oDnnRoleController.AddUserRole(cartInfo.PortalId, cartInfo.UserId, role.RoleID, System.DateTime.Now.AddDays(-1), DotNetNuke.Common.Utilities.Null.NullDate);
+                        c.DataRecord.SetXmlProperty("genxml/checkbox/hasaccount", "True");
+                        c.Save();
                     }
 
                     if (!c.DataRecord.GetXmlPropertyBool("genxml/checkbox/hasaccount") && UserController.Instance.GetCurrentUserInfo().IsInRole("hasaccount"))
