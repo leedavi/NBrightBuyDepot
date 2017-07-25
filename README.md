@@ -14,8 +14,8 @@ Install as a normal DNN module.
 
 After installation a UI for Depots will appear in the BO of NBS.
 
-Useage
-------
+Usage
+-----
 
 Create the different depots in the UI created on the BO of NBS.
 
@@ -56,6 +56,6 @@ Security Roles
 A security role called "hasaccount" will be assign to all imported clients, when they make there first purchase.
 It will also, be assigned to the clients who has had the "Has Account" checkbox set to True in the Client detail page.
 
-This roles is attached using the "ValidateCartAfter" event.
+This role is attached using the "ValidateCartAfter" event.
 
-If the roles "" is not existing in the Portal, then the rolle will NOT be create or assigned.
+If the role "hasaccount" is not existing in the Portal, then the rolle will NOT be create or assigned.

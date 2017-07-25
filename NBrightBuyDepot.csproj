@@ -99,7 +99,9 @@
     <None Include="Themes\config\default\clientfields.cshtml" />
     <None Include="Themes\config\default\display.cshtml" />
     <None Include="Themes\config\default\Admin.cshtml" />
-    <Content Include="Installation\pluginconfig.xml" />
+    <Content Include="Installation\pluginconfig.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Admin.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
