@@ -21,25 +21,35 @@ namespace Nevoweb.DNN.NBrightBuy.Providers.NBrightBuyDepot
 
         public override NBrightInfo ValidateCartAfter(NBrightInfo cartInfo)
         {
-            var settings = PortalController.Instance.GetCurrentPortalSettings();
-            var role = RoleController.Instance.GetRole(settings.PortalId, r => r.RoleName == "hasaccount");
-            if (role != null)
+            var userid = cartInfo.UserId;
+            var uInfo = UserController.Instance.GetUser(PortalSettings.Current.PortalId, userid);
+            if (uInfo != null)
             {
-                var c = new ClientData(cartInfo.PortalId, cartInfo.UserId);
-                if (c.Exists)
-                {
-                    if ((!c.DataRecord.GetXmlPropertyBool("genxml/checkbox/hasaccount") || c.DataRecord.GetXmlPropertyRaw("genxml/checkbox/hasaccount") == "") && !UserController.Instance.GetCurrentUserInfo().IsInRole("hasaccount"))
-                    {
-                        //Assign to user
-                        var oDnnRoleController = new RoleController();
-                        oDnnRoleController.AddUserRole(cartInfo.PortalId, cartInfo.UserId, role.RoleID, System.DateTime.Now.AddDays(-1), DotNetNuke.Common.Utilities.Null.NullDate);
-                        c.DataRecord.SetXmlProperty("genxml/checkbox/hasaccount", "True");
-                        c.Save();
-                    }
+                var defaultdepot = GetDefaultDepot();
+                AssignDepot(uInfo, cartInfo.PortalId, cartInfo.UserId, defaultdepot);
 
-                    if (!c.DataRecord.GetXmlPropertyBool("genxml/checkbox/hasaccount") && UserController.Instance.GetCurrentUserInfo().IsInRole("hasaccount"))
+                var settings = PortalController.Instance.GetCurrentPortalSettings();
+                var role = RoleController.Instance.GetRole(settings.PortalId, r => r.RoleName == "hasaccount");
+                if (role != null)
+                {
+                    var c = new ClientData(cartInfo.PortalId, cartInfo.UserId);
+                    if (c.Exists)
                     {
-                        RoleController.DeleteUserRole(UserController.Instance.GetCurrentUserInfo(), role, settings, false);
+                        if (c.DataRecord.GetXmlPropertyBool("genxml/depotassigned"))
+                        {
+                            if ((!c.DataRecord.GetXmlPropertyBool("genxml/checkbox/hasaccount") || c.DataRecord.GetXmlPropertyRaw("genxml/checkbox/hasaccount") == "") && !UserController.Instance.GetCurrentUserInfo().IsInRole("hasaccount"))
+                            {
+                                //Assign to user
+                                var oDnnRoleController = new RoleController();
+                                oDnnRoleController.AddUserRole(cartInfo.PortalId, cartInfo.UserId, role.RoleID, System.DateTime.Now.AddDays(-1), DotNetNuke.Common.Utilities.Null.NullDate);
+                                c.DataRecord.SetXmlProperty("genxml/checkbox/hasaccount", "True");
+                                c.Save();
+                            }
+                        }
+                        if (!c.DataRecord.GetXmlPropertyBool("genxml/checkbox/hasaccount") && UserController.Instance.GetCurrentUserInfo().IsInRole("hasaccount"))
+                        {
+                            RoleController.DeleteUserRole(UserController.Instance.GetCurrentUserInfo(), role, settings, false);
+                        }
                     }
                 }
             }
@@ -93,57 +103,8 @@ namespace Nevoweb.DNN.NBrightBuy.Providers.NBrightBuyDepot
             var uInfo = UserController.Instance.GetUser(PortalSettings.Current.PortalId, userid);
             if (uInfo != null)
             {
-                var objCtrl = new NBrightBuyController();
-                var defaultdepotnum = "";
-                var defaultdepotemail = "";
-                var l = objCtrl.GetList(PortalSettings.Current.PortalId, -1, "DEPOT", "", " order by [XMLData].value('(genxml/textbox/ref)[1]','nvarchar(50)')", 0, 0, 0, 0, Utils.GetCurrentCulture());
-                if (l.Any())
-                {
-
-                    defaultdepotnum = l.First().GetXmlProperty("genxml/textbox/ref");
-                    defaultdepotemail = l.First().GetXmlProperty("genxml/textbox/email");
-                    foreach (var i in l)
-                    {
-                        if (i.GetXmlPropertyBool("genxml/checkbox/default"))
-                        {
-                            defaultdepotnum = i.GetXmlProperty("genxml/textbox/ref");
-                            defaultdepotemail = i.GetXmlProperty("genxml/textbox/email");
-                            break;
-                        }
-                    }
-                }
-                var c = new ClientData(nbrightInfo.PortalId, nbrightInfo.UserId);
-                if (c.Exists)
-                {
-                    if (!c.DataRecord.GetXmlPropertyBool("genxml/depotassigned"))
-                    {
-                        // send email that client needs assignment
-                        var emailBody = "<div>" + DnnUtils.GetResourceString("/DesktopModules/NBright/NBrightBuyDepot/App_LocalResources/", "Admin.assignedemail") + " " + uInfo.Email + "</div>";
-                        NBrightBuyUtils.SendEmail(emailBody, defaultdepotemail, "", c.DataRecord, "DEPOT", StoreSettings.Current.AdminEmail, StoreSettings.Current.EditLanguage);
-                    }
-
-
-                    var depotnum = c.DataRecord.GetXmlProperty("genxml/dropdownlist/depot");
-                    var nbi = objCtrl.GetByGuidKey(PortalSettings.Current.PortalId, -1, "DEPOTUSER", uInfo.Email);
-                    if (depotnum == "" && nbi != null)
-                    {
-                        depotnum = nbi.GetXmlProperty("genxml/dropdownlist/depot");
-                        var depot = objCtrl.GetByGuidKey(nbrightInfo.PortalId, -1, "DEPOT", depotnum);
-                        if (depot != null)
-                        {
-                            c.DataRecord.SetXmlProperty("genxml/dropdownlist/depot", depotnum);
-                            c.DataRecord.SetXmlProperty("genxml/depotassigned", "True");
-                            c.Save();
-                        }
-                        objCtrl.Delete(nbi.ItemID);
-                    }
-                    else
-                    {
-                        c.DataRecord.SetXmlProperty("genxml/dropdownlist/depot", defaultdepotnum);
-                        c.DataRecord.SetXmlProperty("genxml/depotassigned", "True");
-                        c.Save();
-                    }
-                }
+                var defaultdepot = GetDefaultDepot();
+                AssignDepot(uInfo, nbrightInfo.PortalId, nbrightInfo.UserId, defaultdepot);
             }
             return nbrightInfo;
         }
@@ -200,5 +161,73 @@ namespace Nevoweb.DNN.NBrightBuy.Providers.NBrightBuyDepot
         {
             return nbrightInfo;
         }
+
+
+        private DefaultDepot GetDefaultDepot()
+        {
+            var objCtrl = new NBrightBuyController();
+            var defaultdepotnum = "";
+            var defaultdepotemail = "";
+            var l = objCtrl.GetList(PortalSettings.Current.PortalId, -1, "DEPOT", "", " order by [XMLData].value('(genxml/textbox/ref)[1]','nvarchar(50)')", 0, 0, 0, 0, Utils.GetCurrentCulture());
+            if (l.Any())
+            {
+
+                defaultdepotnum = l.First().GetXmlProperty("genxml/textbox/ref");
+                defaultdepotemail = l.First().GetXmlProperty("genxml/textbox/email");
+                foreach (var i in l)
+                {
+                    if (i.GetXmlPropertyBool("genxml/checkbox/default"))
+                    {
+                        defaultdepotnum = i.GetXmlProperty("genxml/textbox/ref");
+                        defaultdepotemail = i.GetXmlProperty("genxml/textbox/email");
+                        break;
+                    }
+                }
+            }
+            var d = new DefaultDepot();
+            d.Ref = defaultdepotnum;
+            d.Email = defaultdepotemail;
+            return d;
+        }
+
+        private void AssignDepot(UserInfo uInfo, int portalId, int userId, DefaultDepot defaultdepot)
+        {
+            var objCtrl = new NBrightBuyController();
+
+            var c = new ClientData(portalId, userId);
+            if (c.Exists)
+            {
+                if (!c.DataRecord.GetXmlPropertyBool("genxml/depotassigned"))
+                {
+                    // send email that client needs assignment
+                    var emailBody = "<div>" + DnnUtils.GetResourceString("/DesktopModules/NBright/NBrightBuyDepot/App_LocalResources/", "Admin.assignedemail") + " " + uInfo.Email + "</div>";
+                    NBrightBuyUtils.SendEmail(emailBody, defaultdepot.Email, "", c.DataRecord, "DEPOT", StoreSettings.Current.AdminEmail, StoreSettings.Current.EditLanguage);
+                }
+
+                var depotnum = c.DataRecord.GetXmlProperty("genxml/dropdownlist/depot");
+                var nbi = objCtrl.GetByGuidKey(PortalSettings.Current.PortalId, -1, "DEPOTUSER", uInfo.Email);
+                if (depotnum == "" && nbi != null)
+                {
+                    depotnum = nbi.GetXmlProperty("genxml/dropdownlist/depot");
+                    var depot = objCtrl.GetByGuidKey(portalId, -1, "DEPOT", depotnum);
+                    if (depot != null)
+                    {
+                        c.DataRecord.SetXmlProperty("genxml/dropdownlist/depot", depotnum);
+                        c.DataRecord.SetXmlProperty("genxml/depotassigned", "True");
+                        c.Save();
+                    }
+                    objCtrl.Delete(nbi.ItemID);
+                }
+            }
+
+        }
+
     }
+
+    public class DefaultDepot
+    {
+        public string Ref { get; set; }
+        public string Email { get; set; }
+    }
+
 }
