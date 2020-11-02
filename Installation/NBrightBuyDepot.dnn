@@ -1,6 +1,6 @@
 ﻿<dotnetnuke type="Package" version="5.0">
 	<packages>
-		<package name="NBrightBuyDepot" type="Module" version="1.0.1">
+		<package name="NBrightBuyDepot" type="Module" version="1.1.0">
 			<friendlyName>NBrightBuyDepot</friendlyName>
 			<description>NBrightBuyDepot: Depot Admin for NBS</description>
 			<iconFile />
