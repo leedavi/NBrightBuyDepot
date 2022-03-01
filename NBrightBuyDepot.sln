@@ -1,40 +1,52 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBrightBuyDepot", "NBrightBuyDepot.csproj", "{3F96B553-3FDE-4F11-B7AD-E6D45A755327}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBrightBuyDepot", "NBrightBuyDepot.csproj", "{EAC28619-5E23-4D38-9070-F24A24DAD906}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBrightBuy", "..\NBrightBuy\NBrightBuy.csproj", "{8F850303-BEC5-4247-9126-1E58F1402205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBrightDNN", "..\NBrightData\projects\NBrightDNN\NBrightDNN.csproj", "{EC815D38-62CF-4B46-8177-CF40CE1AAB62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBrightCore", "..\NBrightData\NBrightCore\NBrightCore.csproj", "{7B338113-6A9A-484D-A6C6-4D63FD5E58C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBrightCore", "..\NBrightData\projects\NBrightCore\NBrightCore.csproj", "{7B338113-6A9A-484D-A6C6-4D63FD5E58C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBrightDNN", "..\NBrightData\NBrightDNN.csproj", "{EC815D38-62CF-4B46-8177-CF40CE1AAB62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Razor|Any CPU = Razor|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3F96B553-3FDE-4F11-B7AD-E6D45A755327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F96B553-3FDE-4F11-B7AD-E6D45A755327}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F96B553-3FDE-4F11-B7AD-E6D45A755327}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F96B553-3FDE-4F11-B7AD-E6D45A755327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC28619-5E23-4D38-9070-F24A24DAD906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC28619-5E23-4D38-9070-F24A24DAD906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC28619-5E23-4D38-9070-F24A24DAD906}.Razor|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC28619-5E23-4D38-9070-F24A24DAD906}.Razor|Any CPU.Build.0 = Release|Any CPU
+		{EAC28619-5E23-4D38-9070-F24A24DAD906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC28619-5E23-4D38-9070-F24A24DAD906}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F850303-BEC5-4247-9126-1E58F1402205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F850303-BEC5-4247-9126-1E58F1402205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F850303-BEC5-4247-9126-1E58F1402205}.Razor|Any CPU.ActiveCfg = Razor|Any CPU
+		{8F850303-BEC5-4247-9126-1E58F1402205}.Razor|Any CPU.Build.0 = Razor|Any CPU
 		{8F850303-BEC5-4247-9126-1E58F1402205}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F850303-BEC5-4247-9126-1E58F1402205}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B338113-6A9A-484D-A6C6-4D63FD5E58C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B338113-6A9A-484D-A6C6-4D63FD5E58C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B338113-6A9A-484D-A6C6-4D63FD5E58C6}.Razor|Any CPU.ActiveCfg = Razor|Any CPU
+		{7B338113-6A9A-484D-A6C6-4D63FD5E58C6}.Razor|Any CPU.Build.0 = Razor|Any CPU
 		{7B338113-6A9A-484D-A6C6-4D63FD5E58C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B338113-6A9A-484D-A6C6-4D63FD5E58C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Razor|Any CPU.ActiveCfg = Razor|Any CPU
+		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Razor|Any CPU.Build.0 = Razor|Any CPU
+		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC815D38-62CF-4B46-8177-CF40CE1AAB62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3EBF81CD-51F7-4530-B84E-B914E9A3148E}
 	EndGlobalSection
 EndGlobal

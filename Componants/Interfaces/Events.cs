@@ -200,8 +200,8 @@ namespace Nevoweb.DNN.NBrightBuy.Providers.NBrightBuyDepot
                 if (!c.DataRecord.GetXmlPropertyBool("genxml/depotassigned"))
                 {
                     // send email that client needs assignment
-                    var emailBody = "<div>" + DnnUtils.GetResourceString("/DesktopModules/NBright/NBrightBuyDepot/App_LocalResources/", "Admin.assignedemail") + " " + uInfo.Email + "</div>";
-                    NBrightBuyUtils.SendEmail(emailBody, defaultdepot.Email, "", c.DataRecord, "DEPOT", StoreSettings.Current.AdminEmail, StoreSettings.Current.EditLanguage);
+                    //var emailBody = "<div>" + DnnUtils.GetResourceString("/DesktopModules/NBright/NBrightBuyDepot/App_LocalResources/", "Admin.assignedemail") + " " + uInfo.Email + "</div>";
+                    //NBrightBuyUtils.SendEmail(emailBody, defaultdepot.Email, "", c.DataRecord, "DEPOT", StoreSettings.Current.AdminEmail, StoreSettings.Current.EditLanguage);
                 }
 
                 var depotnum = c.DataRecord.GetXmlProperty("genxml/dropdownlist/depot");
